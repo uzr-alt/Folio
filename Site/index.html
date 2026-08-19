@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agence Harem - Luxury Board</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #fcf6ba;
+            --gold-dark: #aa771c;
+            --bg-black: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Playfair Display', 'Times New Roman', serif; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Décorations "fleurs/lumière" en arrière-plan */
+        .flower-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 0;
+            background-image: radial-gradient(circle at 20% 30%, var(--gold) 1px, transparent 1px),
+                              radial-gradient(circle at 80% 70%, var(--gold) 1px, transparent 1px);
+            background-size: 100px 100px;
+        }
+
+        /* Navigation */
+        nav {
+            width: 100%;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Ligne très fine et semi-transparente */
+            position: relative;
+            z-index: 10;
+        }
+
+        nav h1 { font-size: 2rem; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #ccc;
+            margin-left: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        /* --- Hero Section Agence --- */
+        .agency-hero {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 80px 20px 20px;
+            max-width: 800px;
+        }
+
+        .agency-hero h2 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .agency-hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #aaa;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-weight: 300;
+        }
+
+        /* Grille */
+        .models-container {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            padding: 40px 20px 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Carte avec bordure or très fine */
+        .model-card {
+            background: #111;
+            padding: 1px; /* TRÈS FIN : seulement 1 pixel */
+            position: relative;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            /* Le dégradé or sert de bordure via le padding d'1px */
+            background: linear-gradient(135deg, rgba(170,119,28,0.5), var(--gold), rgba(252,246,186,0.5), rgba(170,119,28,0.5));
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .card-inner {
+            background: #080808;
+            padding: 20px;
+            height: 100%;
+            border-radius: 7px; /* Légèrement moins que la carte pour suivre l'arrondi */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .model-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15); /* Halo doré léger au survol */
+        }
+
+        .model-photo {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            filter: grayscale(20%) contrast(110%); /* Donne un léger ton éditorial aux photos */
+            transition: filter 0.4s;
+        }
+        
+        .model-card:hover .model-photo {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        h3 { color: #fff; font-size: 1.6rem; letter-spacing: 2px; font-weight: 300; }
+        p { color: #666; margin: 8px 0 20px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;}
+
+        .gold-btn {
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+            padding: 10px 25px;
+            background: transparent;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            transition: 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            border-radius: 2px;
+        }
+
+        .gold-btn:hover { 
+            background: rgba(212, 175, 55, 0.1); 
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .nav-links a { margin: 0 10px; }
+            .agency-hero h2 { font-size: 2.5rem; }
+            .agency-hero p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="flower-bg"></div>
+
+    <!-- Barre de navigation -->
+    <nav>
+        <h1>Harem</h1>
+        <div class="nav-links">
+            <a href="#">L'Agence</a>
+            <a href="#board">Nos Modèles</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Présentation -->
+    <header class="agency-hero">
+        <h2>L'Élégance Redéfinie</h2>
+        <p>Découvrez notre sélection exclusive de talents. Nous représentons les visages de demain pour vos campagnes éditoriales, défilés et projets créatifs internationaux.</p>
+    </header>
+
+    <section id="board" class="models-container">
+        <!-- Carte Modèle 1 -->
+        <a href="Aliénore Camus/index.html" class="model-card">
+            <div class="card-inner">
+                <img src="Aliénore Camus/images/content-11.jpeg" alt="Modèle" class="model-photo">
+                <h3>Aliénore Camus</h3>
+                <p>Poitiers | Bordeaux</p>
+                <div class="gold-btn">Portfolio</div>
+            </div>
+        </a>
+        
+
+         <a href="Josephine Roos/index.html" class="model-card">
+            <div class="card-inner">
+                <img src="Josephine Roos/images/Screenshot_20260813_074652_Instagram.jpg" alt="Modèle" class="model-photo">
+                <h3>Joséphine Roos</h3>
+                <p>Poitiers</p>
+                <div class="gold-btn">Portfolio</div>
+            </div>
+        </a>
+
+
+
+    </section>
+</body>
+</html>

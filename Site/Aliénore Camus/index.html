@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/content-13.jpeg"/>
+    <title>Aliénore Camus - Exposed</title>
+    <style>
+        /* --- Base & Typographie (Style Apple) --- */
+        :root {
+            /* Un vert très subtil et transparent pour l'effet verre */
+            --glass-bg: rgba(240, 255, 245, 0.4); 
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(0, 50, 20, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Police type Apple */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            /* Fond de la page avec un très léger dégradé gris/vert clair */
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f4ec 100%);
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* --- En-tête / Bandeau (Hero Section) --- */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 60vh; /* Prend 60% de la hauteur de l'écran */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* L'image de fond du bandeau, légèrement floutée */
+        .hero-bg {
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px; /* Déborde un peu pour éviter les bords nets avec le flou */
+            background: url('images/content-18.jpeg') center/cover no-repeat;
+            filter: blur(4px); /* Flou léger */
+            z-index: 1;
+        }
+
+        /* Conteneur du nom en effet verre */
+        .glass-name-container {
+            position: relative;
+            z-index: 2;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px 60px;
+            box-shadow: var(--glass-shadow);
+            text-align: center;
+        }
+
+        .glass-name-container h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #1d1d1f;
+            margin-bottom: 5px;
+        }
+
+        .glass-name-container p {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #444;
+        }
+
+        /* --- Section Carrousel (5 Images) --- */
+        .portfolio-section {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+        .carousel-item {
+            position: absolute;
+            top: 50%;
+            width: 300px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            /* Transition fluide pour le déplacement, le flou et la taille */
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translate(-50%, -50%); /* Pour centrer le point d'ancrage de l'image */
+        }
+
+        /* États des 5 images */
+        .carousel-item.active {
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            filter: blur(0);
+            z-index: 5;
+            opacity: 1;
+        }
+
+        .carousel-item.prev {
+            left: 30%;
+            transform: translate(-50%, -50%) scale(0.9);
+            filter: blur(4px);
+            z-index: 4;
+            opacity: 0.8;
+        }
+
+        .carousel-item.next {
+            left: 70%;
+            transform: translate(-50%, -50%) scale(0.9);
+            filter: blur(4px);
+            z-index: 4;
+            opacity: 0.8;
+        }
+
+        .carousel-item.far-prev {
+            left: 15%;
+            transform: translate(-50%, -50%) scale(0.7);
+            filter: blur(8px);
+            z-index: 3;
+            opacity: 0.5;
+        }
+
+        .carousel-item.far-next {
+            left: 85%;
+            transform: translate(-50%, -50%) scale(0.7);
+            filter: blur(8px);
+            z-index: 3;
+            opacity: 0.5;
+        }
+
+        .carousel-item.hidden {
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            filter: blur(15px);
+            z-index: 1;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Boutons de navigation */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #333;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn { left: 5%; }
+        .next-btn { right: 5%; }
+
+        /* --- Sections Infos (Mensurations & Contact) --- */
+        .info-sections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            flex: 1 1 400px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .glass-card h2 {
+            font-weight: 500;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            color: #1d1d1f;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px 15px;
+        }
+
+        .info-grid div {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .info-grid span {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+
+        /* --- Responsive Design (Mobiles) --- */
+        @media (max-width: 768px) {
+            .hero-banner { height: 40vh; }
+            .glass-name-container h1 { font-size: 2rem; }
+            .carousel-item { width: 220px; height: 330px; }
+            .carousel-item.far-prev { left: 0%; opacity: 0; }
+            .carousel-item.far-next { left: 100%; opacity: 0; }
+            .carousel-item.prev { left: 20%; }
+            .carousel-item.next { left: 80%; }
+            .prev-btn { left: 2%; }
+            .next-btn { right: 2%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BANDEAU HAUT (HERO) -->
+    <header class="hero-banner">
+        <!-- L'image de fond (floutée via CSS) -->
+        <div class="hero-bg"></div>
+        
+        <!-- Le nom centré en effet verre -->
+        <div class="glass-name-container">
+            <h1>Aliénore Camus</h1>
+            <p> Présentation d'une Pute </p>
+        </div>
+    </header>
+
+    <!-- CARROUSEL 5 IMAGES -->
+    <section class="portfolio-section">
+        <button class="nav-btn prev-btn">&#10094;</button>
+        
+        <div class="carousel-container">
+            <!-- Remplace ces URL par les vraies photos de ton amie -->
+            <img src="images/content-11.jpeg" class="carousel-item" alt="Shooting 1">
+            <img src="images/content-10.jpeg" class="carousel-item" alt="Shooting 2">
+            <img src="images/Screenshot_20260615_144904_Instagram.jpg" class="carousel-item" alt="Shooting 3">
+            <img src="images/Screenshot_20260817_224025_Instagram(1).jpg" class="carousel-item" alt="Shooting 4">
+            <img src="images/Screenshot_20260817_224146_Instagram.jpg" class="carousel-item" alt="Shooting 5">
+            <!-- Tu peux ajouter plus d'images si tu le souhaites -->
+        </div>
+        <button class="nav-btn next-btn">&#10095;</button>
+    </section>
+    <!-- MENSURATIONS & CONTACT EN WIDGETS -->
+    <section class="info-sections">
+        <!-- Widget Mensurations -->
+        <div class="glass-card">
+            <h2>Mensurations</h2>
+            <div class="info-grid">
+                <div><span>DDN</span>2006</div>
+                <div><span>Taille</span> 1m68</div>
+                <div><span>Hanches</span> 93cm</div>
+                <div><span>Pointure</span> 39</div>
+                <div><span>Poitrine</span> 85A</div>
+                <div><span>Cheveux</span> Bruns</div>
+                <div><span>Yeux</span> Verts noisettes</div>
+                <div><span>Buste</span>81cm</div>
+            </div>
+        </div>
+        <!-- Widget Contact -->
+        <div class="glass-card">
+            <h2>Contact</h2>
+            <div class="info-grid" style="grid-template-columns: 1fr; gap: 20px;">
+                <div><span>Email Professionnel</span> camusalienore@gmail.com</div>
+                <div><span>Téléphone</span> +33 7 67 47 32 12</div>
+                <div><span>Instagram</span> @alienorecms</div>
+                <div><span>Instagram Pro</span>@alienorepro_</div>
+                <div><span>Basée à</span> Poitiers, Bordeaux</div>
+                <div><span>Address</span>5 route de Vendeuvre</div>
+            </div>
+        </div>
+        <!-- Widget BNWO -->
+        <div class="glass-card">
+            <h2>BNWO Profil</h2>
+            <div class="info-grid">
+                <div><span>Black Only</span>Yes</div>
+                <div><span>Size Queen</span>No</div>
+                <div><span>Tattoo</span>Not yet</div>
+                <div><span>Single</span>No</div>
+                <div><span>Black BF</span>Yes</div>
+                <div><span>BBC Slut</span>Yes</div>
+                <div><span>Virgin</span>No</div>
+                <div><span>Snowbunny</span>Yes</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const totalItems = items.length;
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            items.forEach((item, index) => {
+                // On nettoie les anciennes classes
+                item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next', 'hidden');
+
+                // Calcul des indices de façon circulaire
+                const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
+                const nextIndex = (currentIndex + 1) % totalItems;
+                const farPrevIndex = (currentIndex - 2 + totalItems) % totalItems;
+                const farNextIndex = (currentIndex + 2) % totalItems;
+
+                // Attribution des nouvelles classes
+                if (index === currentIndex) {
+                    item.classList.add('active');
+                } else if (index === prevIndex) {
+                    item.classList.add('prev');
+                } else if (index === nextIndex) {
+                    item.classList.add('next');
+                } else if (index === farPrevIndex) {
+                    item.classList.add('far-prev');
+                } else if (index === farNextIndex) {
+                    item.classList.add('far-next');
+                } else {
+                    item.classList.add('hidden'); // S'il y a plus de 5 images
+                }
+            });
+        }
+
+        // Action boutons
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
+        });
+
+        // Clique direct sur une image pour la mettre au centre
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+
+        // Initialisation
+        updateCarousel();
+    </script>
+</body>
+</html>
