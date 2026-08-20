@@ -3,192 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/4574.jpg"/>
-    <title>Clara Bernerond - Exposed</title>
+    <link rel="icon" href="../icon.png">
+    <title>Mathilde – Exposed</title>
     <style>
-        /* --- Base & Typographie (Style Apple) --- */
         :root {
-            /* Un vert très subtil et transparent pour l'effet verre */
-            --glass-bg: rgba(240, 255, 245, 0.4); 
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px rgba(0, 50, 20, 0.1);
+            --gold: #d4af37;
+            --gold-light: #fcf6ba;
+            --gold-dark: #aa771c;
+            --bg-black: #050505;
+            --card-bg: #0c0c0c;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Police type Apple */
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            /* Fond de la page avec un très léger dégradé gris/vert clair */
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8f4ec 100%);
-            color: #1d1d1f;
+            background-color: var(--bg-black);
+            color: #fff;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* --- En-tête / Bandeau (Hero Section) --- */
+        /* ===== HERO ===== */
         .hero-banner {
             position: relative;
             width: 100%;
-            height: 60vh; /* Prend 60% de la hauteur de l'écran */
+            height: 55vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        /* L'image de fond du bandeau, légèrement floutée */
         .hero-bg {
             position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px; /* Déborde un peu pour éviter les bords nets avec le flou */
-            background: url('images/5954.jpg') center/cover no-repeat;
-            filter: blur(4px); /* Flou léger */
+            inset: -20px;
+            background: url('images/5909.jpg') center/cover no-repeat;
+            filter: blur(6px) brightness(0.45);
             z-index: 1;
         }
 
-        /* Conteneur du nom en effet verre */
         .glass-name-container {
             position: relative;
             z-index: 2;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px 60px;
-            box-shadow: var(--glass-shadow);
+            background: rgba(5, 5, 5, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px;
+            padding: 28px 50px;
             text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .glass-name-container h1 {
-            font-size: 3rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            color: #1d1d1f;
-            margin-bottom: 5px;
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 6px;
         }
 
         .glass-name-container p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: #444;
+            color: #aaa;
         }
 
-        /* --- Section Carrousel (5 Images) --- */
-        .portfolio-section {
+        /* ===== TOURNIQUET ===== */
+        .tourniquet-section {
             position: relative;
             width: 100%;
-            height: 700px;
+            height: 620px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-top: 40px;
+            justify-content: center;
+            margin: 30px 0 10px;
             overflow: hidden;
+            user-select: none;
+            cursor: grab;
+            touch-action: pan-y;
         }
 
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
+        .tourniquet-section:active {
+            cursor: grabbing;
         }
 
-        .carousel-item {
+        .tourniquet-track {
             position: absolute;
+            left: 0;
             top: 50%;
+            display: flex;
+            align-items: center;
+            height: 480px;
+            will-change: transform;
+            transform: translateY(-50%);
+        }
+
+        .tourniquet-item {
+            flex-shrink: 0;
             width: 300px;
             height: 450px;
+            margin: 0 14px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+        }
+
+        .tourniquet-item img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            /* Transition fluide pour le déplacement, le flou et la taille */
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            transform: translate(-50%, -50%); /* Pour centrer le point d'ancrage de l'image */
-        }
-
-        /* États des 5 images */
-        .carousel-item.active {
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.1);
-            filter: blur(0);
-            z-index: 5;
-            opacity: 1;
-        }
-
-        .carousel-item.prev {
-            left: 30%;
-            transform: translate(-50%, -50%) scale(0.9);
-            filter: blur(4px);
-            z-index: 4;
-            opacity: 0.8;
-        }
-
-        .carousel-item.next {
-            left: 70%;
-            transform: translate(-50%, -50%) scale(0.9);
-            filter: blur(4px);
-            z-index: 4;
-            opacity: 0.8;
-        }
-
-        .carousel-item.far-prev {
-            left: 15%;
-            transform: translate(-50%, -50%) scale(0.7);
-            filter: blur(8px);
-            z-index: 3;
-            opacity: 0.5;
-        }
-
-        .carousel-item.far-next {
-            left: 85%;
-            transform: translate(-50%, -50%) scale(0.7);
-            filter: blur(8px);
-            z-index: 3;
-            opacity: 0.5;
-        }
-
-        .carousel-item.hidden {
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            filter: blur(15px);
-            z-index: 1;
-            opacity: 0;
+            display: block;
             pointer-events: none;
         }
 
-        /* Boutons de navigation */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: #333;
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .tourniquet-item.center {
+            filter: none !important;
+            opacity: 1 !important;
+            transform: scale(1.1);
+            z-index: 20;
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 22px 50px rgba(212, 175, 55, 0.22);
+        }
+
+        .tourniquet-item.near {
+            filter: blur(2.5px);
+            opacity: 0.78;
+            transform: scale(0.93);
             z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
         }
 
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: translateY(-50%) scale(1.1);
+        .tourniquet-item.far {
+            filter: blur(6px);
+            opacity: 0.38;
+            transform: scale(0.82);
+            z-index: 5;
         }
 
-        .prev-btn { left: 5%; }
-        .next-btn { right: 5%; }
-
-        /* --- Sections Infos (Mensurations & Contact) --- */
+        /* ===== INFO CARDS – style blanc adapté en noir/or ===== */
         .info-sections {
             display: flex;
             flex-wrap: wrap;
@@ -199,25 +160,23 @@
             margin: 0 auto;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
+        .gold-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(212, 175, 55, 0.25);
             border-radius: 30px;
             padding: 40px;
-            box-shadow: var(--glass-shadow);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
             flex: 1 1 400px;
             max-width: 500px;
             text-align: center;
         }
 
-        .glass-card h2 {
+        .gold-card h2 {
             font-weight: 500;
             font-size: 1.8rem;
             margin-bottom: 30px;
             letter-spacing: 1px;
-            color: #1d1d1f;
+            color: var(--gold);
         }
 
         .info-grid {
@@ -229,99 +188,246 @@
         .info-grid div {
             font-size: 1.1rem;
             font-weight: 500;
-            color: #1d1d1f;
+            color: #f0f0f0;
         }
 
         .info-grid span {
             display: block;
             font-size: 0.85rem;
-            color: #666;
+            color: #777;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
             font-weight: 400;
         }
+        /* ===== GALERIE COMPLÈTE ===== */
+        .full-gallery {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
 
-        /* --- Responsive Design (Mobiles) --- */
+        .full-gallery h2 {
+            text-align: center;
+            color: var(--gold);
+            font-weight: 300;
+            letter-spacing: 3px;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+            border-color: var(--gold);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        /* ===== BOUTON ZIP ===== */
+        .download-zone {
+            text-align: center;
+            margin: 20px 0 60px;
+        }
+
+        .gold-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+            padding: 14px 32px;
+            background: transparent;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .gold-btn:hover {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .gold-btn:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 5, 5, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow:
+                0 0 0 1px rgba(212, 175, 55, 0.15),
+                0 0 30px rgba(212, 175, 55, 0.25),
+                0 0 60px rgba(212, 175, 55, 0.12),
+                0 20px 50px rgba(0, 0, 0, 0.6);
+            animation: lightboxIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes lightboxIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(5, 5, 5, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            z-index: 10;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            transform: scale(1.08);
+        }
+
         @media (max-width: 768px) {
-            .hero-banner { height: 40vh; }
+            .hero-banner { height: 42vh; }
             .glass-name-container h1 { font-size: 2rem; }
-            .carousel-item { width: 220px; height: 330px; }
-            .carousel-item.far-prev { left: 0%; opacity: 0; }
-            .carousel-item.far-next { left: 100%; opacity: 0; }
-            .carousel-item.prev { left: 20%; }
-            .carousel-item.next { left: 80%; }
-            .prev-btn { left: 2%; }
-            .next-btn { right: 2%; }
+            .tourniquet-section { height: 480px; }
+            .tourniquet-item { width: 240px; height: 360px; margin: 0 10px; }
+            .lightbox-close {
+                top: -14px;
+                right: -14px;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- BANDEAU HAUT (HERO) -->
+    <!-- HERO -->
     <header class="hero-banner">
-        <!-- L'image de fond (floutée via CSS) -->
         <div class="hero-bg"></div>
-        
-        <!-- Le nom centré en effet verre -->
         <div class="glass-name-container">
-            <h1>Clara Bernerond</h1>
-            <p> Une pute depuis toujours </p>
+            <h1>Mathilde</h1>
+            <p>Une pute d'expérience</p>
         </div>
     </header>
 
-    <!-- CARROUSEL 5 IMAGES -->
-    <section class="portfolio-section">
-        <button class="nav-btn prev-btn">&#10094;</button>
-        
-        <div class="carousel-container">
-            <!-- Remplace ces URL par les vraies photos de ton amie -->
-            <img src="images/5943.jpg" class="carousel-item" alt="Shooting 1">
-            <img src="images/5949.webp" class="carousel-item" alt="Shooting 2">
-            <img src="images/5956.jpg" class="carousel-item" alt="Shooting 3">
-            <img src="images/5964.jpg" class="carousel-item" alt="Shooting 4">
-            <img src="images/11828.jpg" class="carousel-item" alt="Shooting 5">
-            <img src="images/11829.jpg" class="carousel-item" alt="Shooting 6">
-            <img src="images/5961.jpg" class="carousel-item" alt="Shooting 7">
-            <img src="images/5940.jpg" class="carousel-item" alt="Shooting 8">
-            <img src="images/3870.jpg" class="carousel-item" alt="Shooting 9">
-            <!-- Tu peux ajouter plus d'images si tu le souhaites -->
+    <!-- TOURNIQUET -->
+    <section class="tourniquet-section" id="tourniquet">
+        <div class="tourniquet-track" id="track">
+            <!-- ===== Images du tourniquet ===== -->
+            <div class="tourniquet-item"><img src="images/3866.jpg" alt=""></div>
+            <div class="tourniquet-item"><img src="images/5907.jpg" alt=""></div>
+            <div class="tourniquet-item"><img src="images/3728.jpg" alt=""></div>
+            <div class="tourniquet-item"><img src="images/3871.jpg" alt=""></div>
+            <div class="tourniquet-item"><img src="images/5907.jpg" alt=""></div>
+            <div class="tourniquet-item"><img src="images/5971.jpg" alt=""></div>
+            <!-- ===== Fin des images du tourniquet, même si possible d'en mettre d'autres ===== -->
         </div>
-        <button class="nav-btn next-btn">&#10095;</button>
     </section>
-    <!-- MENSURATIONS & CONTACT EN WIDGETS -->
+
+    <!-- INFOS -->
     <section class="info-sections">
-        <!-- Widget Mensurations -->
-        <div class="glass-card">
+        <div class="gold-card">
             <h2>Mensurations</h2>
             <div class="info-grid">
-                <div><span>DDN</span>2006</div>
-                <div><span>Taille</span> 1m66</div>
-                <div><span>Hanches</span> 104cm</div>
-                <div><span>Pointure</span> 38</div>
-                <div><span>Poitrine</span> 90D</div>
-                <div><span>Cheveux</span> Châtain</div>
-                <div><span>Yeux</span> Marron clair</div>
-                <div><span>Buste</span>97cm</div>
+                <div><span>DDN</span>2003</div>
+                <div><span>Taille</span>1m64</div>
+                <div><span>Hanches</span>104cm</div>
+                <div><span>Pointure</span>39</div>
+                <div><span>Poitrine</span>90D</div>
+                <div><span>Cheveux</span>Châtin clair</div>
+                <div><span>Yeux</span>Marron</div>
+                <div><span>Buste</span>99cm</div>
             </div>
         </div>
-        <!-- Widget Contact -->
-        <div class="glass-card">
+
+        <div class="gold-card">
             <h2>Contact</h2>
-            <div class="info-grid" style="grid-template-columns: 1fr; gap: 20px;">
-                <div><span>Instagram</span> @cla_sss_</div>
-                <div><span>Basée à</span> Poitiers</div>
+            <div class="info-grid" style="grid-template-columns: 1fr; gap: 18px;">
+                <div><span>Instagram</span>@_mathiiiilde_rdn</div>
+                <div><span>Basée à</span>Poitiers</div>
             </div>
         </div>
-        <!-- Widget BNWO -->
-        <div class="glass-card">
+
+        <div class="gold-card">
             <h2>BNWO Profil</h2>
             <div class="info-grid">
                 <div><span>Black Only</span>Yes</div>
                 <div><span>Size Queen</span>Yes</div>
-                <div><span>Tattoo</span>Not yet</div>
-                <div><span>Single</span>No</div>
-                <div><span>Black BF</span>Yes</div>
+                <div><span>Tattoo</span>Yes</div>
+                <div><span>Single</span>Yes</div>
+                <div><span>Black BF</span>No</div>
                 <div><span>BBC Slut</span>Yes</div>
                 <div><span>Virgin</span>No</div>
                 <div><span>Snowbunny</span>Yes</div>
@@ -329,63 +435,307 @@
         </div>
     </section>
 
-    <!-- LOGIQUE JAVASCRIPT -->
+    <!-- BOUTON ZIP -->
+    <div class="download-zone">
+        <button class="gold-btn" id="downloadZip">
+            <span>↓</span> Télécharger toutes les photos (.zip)
+        </button>
+    </div>
+
+    <!-- GALERIE COMPLÈTE -->
+    <section class="full-gallery">
+        <h2>Galerie complète</h2>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">×</button>
+            <img src="" alt="" id="lightboxImg">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
-        const items = document.querySelectorAll('.carousel-item');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        const totalItems = items.length;
-        let currentIndex = 0;
+        /* ============================================================
+           IMAGES SUPPLÉMENTAIRES (uniquement galerie + ZIP)
+           ============================================================ */
+                                        const extraGalleryImages = [
+            'images/5908.jpg',
+            'images/5909.jpg',
+            'images/5970.jpg',
+            'images/5972.jpg'
+        ];
 
-        function updateCarousel() {
-            items.forEach((item, index) => {
-                // On nettoie les anciennes classes
-                item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next', 'hidden');
+        /* ============================================================
+           TOURNIQUET INFINI (ordre correct, plus de miroir)
+           ============================================================ */
+        const section = document.getElementById('tourniquet');
+        const track = document.getElementById('track');
+        const originalItems = Array.from(track.children);
+        const originalCount = originalItems.length;
 
-                // Calcul des indices de façon circulaire
-                const prevIndex = (currentIndex - 1 + totalItems) % totalItems;
-                const nextIndex = (currentIndex + 1) % totalItems;
-                const farPrevIndex = (currentIndex - 2 + totalItems) % totalItems;
-                const farNextIndex = (currentIndex + 2) % totalItems;
+        // 1. Clones à droite (ordre normal)
+        originalItems.forEach(item => {
+            track.appendChild(item.cloneNode(true));
+        });
 
-                // Attribution des nouvelles classes
-                if (index === currentIndex) {
-                    item.classList.add('active');
-                } else if (index === prevIndex) {
-                    item.classList.add('prev');
-                } else if (index === nextIndex) {
-                    item.classList.add('next');
-                } else if (index === farPrevIndex) {
-                    item.classList.add('far-prev');
-                } else if (index === farNextIndex) {
-                    item.classList.add('far-next');
+        // 2. Clones à gauche (on insère en partant de la fin pour garder l'ordre correct)
+        for (let i = originalCount - 1; i >= 0; i--) {
+            track.insertBefore(originalItems[i].cloneNode(true), track.firstChild);
+        }
+
+        // Maintenant le track contient : [set] [set original] [set]
+        let items = Array.from(track.children);
+
+        let itemWidth = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let startPointerX = 0;
+        let lastPointerX = 0;
+        let velocity = 0;
+        let rafId = null;
+        let isSnapping = false;
+
+        function getItemWidth() {
+            if (items.length === 0) return 328;
+            const style = getComputedStyle(items[0]);
+            return items[0].offsetWidth + parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+        }
+
+        function updateVisuals() {
+            const centerX = section.getBoundingClientRect().left + section.offsetWidth / 2;
+
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.left + rect.width / 2;
+                const dist = Math.abs(itemCenter - centerX);
+
+                item.classList.remove('center', 'near', 'far');
+
+                if (dist < itemWidth * 0.42) {
+                    item.classList.add('center');
+                } else if (dist < itemWidth * 1.25) {
+                    item.classList.add('near');
                 } else {
-                    item.classList.add('hidden'); // S'il y a plus de 5 images
+                    item.classList.add('far');
                 }
             });
         }
 
-        // Action boutons
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-            updateCarousel();
-        });
+        function setPosition(x, animate = false) {
+            track.style.transition = animate
+                ? 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)'
+                : 'none';
+            track.style.transform = `translateY(-50%) translateX(${x}px)`;
+            currentX = x;
+            updateVisuals();
+        }
 
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalItems;
-            updateCarousel();
-        });
+        function normalizePosition() {
+            const totalOriginalWidth = originalCount * itemWidth;
+            const middleStart = -totalOriginalWidth;
 
-        // Clique direct sur une image pour la mettre au centre
-        items.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentIndex = index;
-                updateCarousel();
+            if (currentX > middleStart + totalOriginalWidth * 0.5) {
+                currentX -= totalOriginalWidth;
+                setPosition(currentX, false);
+            } else if (currentX < middleStart - totalOriginalWidth * 0.5) {
+                currentX += totalOriginalWidth;
+                setPosition(currentX, false);
+            }
+        }
+
+        function getNearestIndex() {
+            const centerX = section.offsetWidth / 2;
+            let nearest = 0;
+            let minDist = Infinity;
+
+            items.forEach((item, i) => {
+                const itemPos = currentX + (i * itemWidth) + itemWidth / 2;
+                const dist = Math.abs(itemPos - centerX);
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearest = i;
+                }
             });
+            return nearest;
+        }
+
+        function snapToNearest() {
+            isSnapping = true;
+            const nearest = getNearestIndex();
+            const target = section.offsetWidth / 2 - (nearest * itemWidth + itemWidth / 2);
+            setPosition(target, true);
+
+            setTimeout(() => {
+                normalizePosition();
+                isSnapping = false;
+                updateVisuals();
+            }, 580);
+        }
+
+        function applyInertia() {
+            if (isSnapping) return;
+
+            if (Math.abs(velocity) < 0.4) {
+                velocity = 0;
+                snapToNearest();
+                return;
+            }
+
+            currentX += velocity;
+            velocity *= 0.94;
+            setPosition(currentX, false);
+            normalizePosition();
+            rafId = requestAnimationFrame(applyInertia);
+        }
+
+        function onPointerDown(clientX) {
+            if (isSnapping) return;
+            isDragging = true;
+            startPointerX = clientX - currentX;
+            lastPointerX = clientX;
+            velocity = 0;
+            cancelAnimationFrame(rafId);
+            track.style.transition = 'none';
+        }
+
+        function onPointerMove(clientX) {
+            if (!isDragging) return;
+            const x = clientX - startPointerX;
+            velocity = clientX - lastPointerX;
+            lastPointerX = clientX;
+            setPosition(x, false);
+        }
+
+        function onPointerUp() {
+            if (!isDragging) return;
+            isDragging = false;
+            applyInertia();
+        }
+
+        section.addEventListener('mousedown', e => {
+            e.preventDefault();
+            onPointerDown(e.clientX);
+        });
+        window.addEventListener('mousemove', e => onPointerMove(e.clientX));
+        window.addEventListener('mouseup', onPointerUp);
+
+        section.addEventListener('touchstart', e => {
+            onPointerDown(e.touches[0].clientX);
+        }, { passive: true });
+
+        section.addEventListener('touchmove', e => {
+            onPointerMove(e.touches[0].clientX);
+        }, { passive: true });
+
+        section.addEventListener('touchend', onPointerUp);
+
+        function init() {
+            itemWidth = getItemWidth();
+            // Position initiale = milieu de la copie centrale, première image centrée
+            const middleOffset = -originalCount * itemWidth;
+            const centerFirst = section.offsetWidth / 2 - itemWidth / 2;
+            currentX = middleOffset + centerFirst;
+            setPosition(currentX, false);
+            updateVisuals();
+        }
+
+        window.addEventListener('resize', () => {
+            itemWidth = getItemWidth();
+            const nearest = getNearestIndex();
+            const target = section.offsetWidth / 2 - (nearest * itemWidth + itemWidth / 2);
+            setPosition(target, false);
+            normalizePosition();
         });
 
-        // Initialisation
-        updateCarousel();
+        setTimeout(init, 60);
+
+        /* ============================================================
+           GALERIE + LIGHTBOX + ZIP
+           ============================================================ */
+        const galleryGrid = document.getElementById('galleryGrid');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        // Images du tourniquet (copie du milieu uniquement)
+        const tourniquetSources = Array.from(track.children)
+            .slice(originalCount, originalCount * 2)
+            .map(item => item.querySelector('img').src);
+
+        const allImages = [...tourniquetSources, ...extraGalleryImages];
+
+        // Remplir la galerie
+        allImages.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = '';
+            img.loading = 'lazy';
+            img.addEventListener('click', () => openLightbox(src));
+            galleryGrid.appendChild(img);
+        });
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Fermer en cliquant sur le fond (pas sur l'image)
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Fermer avec Échap
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+                closeLightbox();
+            }
+        });
+
+        // ZIP
+        const zipBtn = document.getElementById('downloadZip');
+        zipBtn.addEventListener('click', async () => {
+            zipBtn.disabled = true;
+            zipBtn.innerHTML = '<span>…</span> Préparation du ZIP…';
+
+            try {
+                const zip = new JSZip();
+                const folder = zip.folder('Lola_Dumas');
+
+                const promises = allImages.map(async (src, i) => {
+                    const response = await fetch(src);
+                    const blob = await response.blob();
+                    const name = `photo_${String(i + 1).padStart(2, '0')}.jpg`;
+                    folder.file(name, blob);
+                });
+
+                await Promise.all(promises);
+
+                const content = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Lola_Dumas_photos.zip';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                console.error(err);
+                alert('Erreur lors de la création du ZIP.');
+            } finally {
+                zipBtn.disabled = false;
+                zipBtn.innerHTML = '<span>↓</span> Télécharger toutes les photos (.zip)';
+            }
+        });
     </script>
 </body>
 </html>
